@@ -22,15 +22,19 @@ public interface AuthApi {
     @ApiResponse(responseCode = "200", description = "로그인 성공")
     @ApiResponse(
             responseCode = "400",
-            description = "같은 email 또는 username을 사용하는 User가 이미 존재함",
+            description = "비밀번호가 일치하지 않음",
             content = @Content(
-                    mediaType = MediaType.ALL_VALUE,
-                    examples = {
-                            @ExampleObject(
-                                    name = "비밀번호 불일치",
-                                    value = "비밀번호가 일치하지 않습니다."
-                            )
-                    }
+                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                    schema = @Schema(implementation = ErrorResponse.class),
+                    examples = @ExampleObject(
+                            name = "비밀번호 불일치",
+                            value = """
+                                    {
+                                      "status": 400,
+                                      "message": "비밀번호가 일치하지 않습니다."
+                                    }
+                                    """
+                    )
             )
     )
     @ApiResponse(
